@@ -6,3 +6,6 @@ services:
     dockerfilePath: ./Dockerfile
     autoDeploy: true
     healthCheckPath: /
+    envVars:
+      - key: DATABASE_PATH
+        value: /tmp/ci-data/codeigniter.db

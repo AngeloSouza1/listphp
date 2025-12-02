@@ -73,12 +73,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+$dbPath = getenv('DATABASE_PATH');
+if (empty($dbPath)) {
+	$dbPath = '/tmp/ci-data/codeigniter.db';
+}
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => '',
 	'username' => '',
 	'password' => '',
-	'database' => APPPATH.'database/codeigniter.db',
+	'database' => $dbPath,
 	'dbdriver' => 'sqlite3',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

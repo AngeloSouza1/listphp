@@ -13,6 +13,8 @@ a2enconf servername >/dev/null 2>&1 || true
 
 # Garante que o SQLite fique em local gravável (Render usa filesystem imutável da imagem)
 mkdir -p "$(dirname "${RUNTIME_DB_PATH}")"
+chown www-data:www-data "$(dirname "${RUNTIME_DB_PATH}")" 2>/dev/null || true
+chmod 775 "$(dirname "${RUNTIME_DB_PATH}")" 2>/dev/null || true
 if [ ! -f "${RUNTIME_DB_PATH}" ]; then
 	if [ -f /var/www/html/application/database/codeigniter.db ]; then
 		cp /var/www/html/application/database/codeigniter.db "${RUNTIME_DB_PATH}"

@@ -23,7 +23,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:8000/';
+$baseUrlEnv = getenv('BASE_URL');
+if ($baseUrlEnv) {
+	$config['base_url'] = rtrim($baseUrlEnv, '/') . '/';
+} else {
+	$scheme = !empty($_SERVER['HTTP_X_FORWARDED_PROTO'])
+		? $_SERVER['HTTP_X_FORWARDED_PROTO']
+		: ((isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') ? 'https' : 'http');
+	$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+	$config['base_url'] = $scheme . '://' . $host . '/';
+}
 
 /*
 |--------------------------------------------------------------------------
